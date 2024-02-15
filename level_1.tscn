@@ -1,15 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://cm58x3b5k7ydf"]
+[gd_scene load_steps=5 format=3 uid="uid://cm58x3b5k7ydf"]
 
+[ext_resource type="Script" path="res://level.gd" id="1_2a0o7"]
 [ext_resource type="Texture2D" uid="uid://216lunmwvo3h" path="res://purple.png" id="1_yrld4"]
 [ext_resource type="PackedScene" uid="uid://r67de3j02vbr" path="res://player.tscn" id="2_snw63"]
+[ext_resource type="PackedScene" uid="uid://8npe5jn16q1a" path="res://map.tscn" id="4_i57to"]
 
 [node name="Level1" type="Node2D"]
+script = ExtResource("1_2a0o7")
 
-[node name="Backgroud" type="TextureRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
+[node name="ParallaxBackground" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="Backgroud" type="TextureRect" parent="ParallaxBackground"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_yrld4")
 stretch_mode = 1
 
+[node name="map" parent="." instance=ExtResource("4_i57to")]
+z_index = -50
+scale = Vector2(1.00873, 1.07429)
+
 [node name="Player" parent="." instance=ExtResource("2_snw63")]
-position = Vector2(593, 196)
+position = Vector2(514, 330)
+
+[connection signal="body_exited" from="map" to="Player" method="_on_map_body_exited"]
+[connection signal="body_shape_exited" from="map" to="Player" method="_on_map_body_shape_exited"]
